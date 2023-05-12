@@ -44,14 +44,11 @@ def do_work():
       
     while True:
         if not threading.main_thread().is_alive(): exit()
-        # print(f'pausebotmod: Fetching market state')
-        paused = analyze()
-        if paused:
+        if paused := analyze():
             with open('signals/paused.exc','a+') as f:
                 f.write('yes')
-        else:
-            if os.path.isfile("signals/paused.exc"):
-                os.remove('signals/paused.exc')
-                        
+        elif os.path.isfile("signals/paused.exc"):
+            os.remove('signals/paused.exc')
+
         # print(f'pausebotmod: Waiting {TIME_TO_WAIT} minutes for next market checkup')    
         time.sleep((TIME_TO_WAIT*60))

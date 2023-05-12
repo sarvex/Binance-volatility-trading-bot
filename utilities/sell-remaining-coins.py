@@ -19,7 +19,6 @@ from helpers.handle_creds import (
 from colorama import init
 init()
 
-# for colourful logging to the console
 class txcolors:
     BUY = '\033[92m'
     WARNING = '\033[93m'
@@ -41,7 +40,7 @@ parsed_config = load_config(config_file)
 
 LOG_TRADES = parsed_config['script_options'].get('LOG_TRADES')
 LOG_FILE = parsed_config['script_options'].get('LOG_FILE')
-LOG_FILE_PATH = '../' + LOG_FILE
+LOG_FILE_PATH = f'../{LOG_FILE}'
 
 access_key, secret_key = load_correct_creds(parsed_creds)
 
@@ -50,7 +49,7 @@ client = Client(access_key, secret_key)
 def write_log(logline):
     timestamp = datetime.now().strftime("%d/%m %H:%M:%S")
     with open(LOG_FILE_PATH,'a+') as f:
-        f.write(timestamp + ' ' + logline + '\n')
+        f.write(f'{timestamp} {logline}' + '\n')
 
 with open('../coins_bought.json', 'r') as f:
     coins = json.load(f)
